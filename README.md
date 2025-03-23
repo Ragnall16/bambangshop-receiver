@@ -67,17 +67,17 @@ You can install Postman via this website: https://www.postman.com/downloads/
     -   [x] Commit: `Implement add function in Notification repository.`
     -   [x] Commit: `Implement list_all_as_string function in Notification repository.`
     -   [x] Write answers of your learning module's "Reflection Subscriber-1" questions in this README.
--   **STAGE 3: Implement services and controllers**
-    -   [ ] Commit: `Create Notification service struct skeleton.`
-    -   [ ] Commit: `Implement subscribe function in Notification service.`
-    -   [ ] Commit: `Implement subscribe function in Notification controller.`
-    -   [ ] Commit: `Implement unsubscribe function in Notification service.`
-    -   [ ] Commit: `Implement unsubscribe function in Notification controller.`
-    -   [ ] Commit: `Implement receive_notification function in Notification service.`
-    -   [ ] Commit: `Implement receive function in Notification controller.`
-    -   [ ] Commit: `Implement list_messages function in Notification service.`
-    -   [ ] Commit: `Implement list function in Notification controller.`
-    -   [ ] Write answers of your learning module's "Reflection Subscriber-2" questions in this README.
+-   **STAGE 2: Implement services and controllers**
+    -   [x] Commit: `Create Notification service struct skeleton.`
+    -   [x] Commit: `Implement subscribe function in Notification service.`
+    -   [x] Commit: `Implement subscribe function in Notification controller.`
+    -   [x] Commit: `Implement unsubscribe function in Notification service.`
+    -   [x] Commit: `Implement unsubscribe function in Notification controller.`
+    -   [x] Commit: `Implement receive_notification function in Notification service.`
+    -   [x] Commit: `Implement receive function in Notification controller.`
+    -   [x] Commit: `Implement list_messages function in Notification service.`
+    -   [x] Commit: `Implement list function in Notification controller.`
+    -   [x] Write answers of your learning module's "Reflection Subscriber-2" questions in this README.
 
 ## Your Reflections
 This is the place for you to write reflections:
@@ -90,3 +90,8 @@ This is the place for you to write reflections:
 2. In Java, static variables are shared across all instances of a class, and they can be modified freely using static methods. However, Rust enforces stricter safety rules to prevent data races and unsafe memory access. Unlike Java, Rust ensures that static variables must be immutable or synchronized to prevent multiple threads from modifying them unpredictably. In this tutorial, we use `lazy_static!` to define `NOTIFICATIONS` as a `RwLock<Vec<Notification>>`, ensuring that modifications are thread-safe. Without this, Rust would not allow direct mutation of a static variable because it cannot guarantee that multiple threads won’t modify it at the same time, leading to undefined behavior. This strict memory safety model is what makes Rust safe for concurrent programming without the need for a garbage collector.
 
 #### Reflection Subscriber-2
+1. In this tutorial, I followed the provided steps and did not explore additional parts of the code, such as `src/lib.rs`. The main reason for this is that the tutorial already provides a structured approach to implementing the necessary functionality, covering models, repositories, services, and controllers. Since the instructions clearly outline what needs to be implemented, I focused on correctly following them to ensure that my implementation was accurate and functional. Additionally, modifying files outside the tutorial scope could introduce unexpected issues that might affect the stability of the application. However, if I needed a deeper understanding of the overall project structure or encountered specific challenges, I would consider exploring `src/lib.rs` and other files to gain additional insights into how the application is designed.
+
+2. The Observer pattern simplifies adding new subscribers because the publisher (Main app) does not need to be aware of each individual subscriber in advance. Subscribers can dynamically subscribe to notifications for specific product types, and the publisher simply pushes updates whenever an event occurs. This means new subscribers can be added at any time without modifying the publisher’s code, making the system highly scalable.<br> However, adding multiple instances of the Main app introduces additional complexity. Each Main app instance would need a way to coordinate subscriptions to avoid duplicate or inconsistent notifications. If multiple instances operate independently without shared state management, different subscribers might receive different updates, leading to inconsistencies. A potential solution to this issue would be to use a shared database or message broker to synchronize notification events across all instances of the Main app. This would ensure that all subscribers receive consistent updates regardless of which Main app instance handles the notification.
+
+3. I have modified the given Postman collection to include multiple product types for the Create New Product request. This allowed me to test the notification system across three different ports (`8001`, `8002`, and `8003`) to ensure that each subscriber instance received notifications only for the correct product type. By setting up different product types and running multiple instances of the receiver, I was able to confirm that each notification was correctly sent to the intended subscriber. This modification helped in verifying that the Observer pattern implementation was correctly filtering and dispatching notifications. Enhancing the Postman collection in this way was useful because it provided a more thorough way to test real-world scenarios where multiple subscribers exist.
